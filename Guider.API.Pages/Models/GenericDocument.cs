@@ -2,7 +2,7 @@
 {
     using MongoDB.Bson;
     using MongoDB.Bson.Serialization.Attributes;
-    public class Page
+    public class GenericDocument
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
