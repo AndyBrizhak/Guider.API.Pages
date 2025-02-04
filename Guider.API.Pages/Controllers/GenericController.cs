@@ -35,6 +35,25 @@ namespace Guider.API.Pages.Controllers
             return Ok(document);
         }
 
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<GenericDocument>>> Search([FromQuery] string key, [FromQuery] string value)
+        {
+            if (string.IsNullOrWhiteSpace(key) || string.IsNullOrWhiteSpace(value))
+            {
+                return BadRequest("Key and value must be provided.");
+            }
+
+            var results = await _repository.SearchByFieldAsync(key, value);
+
+            if (!results.Any())
+            {
+                return NotFound();
+            }
+
+            return Ok(results);
+        }
+
+
         [HttpPost]
         public async Task<ActionResult> Create([FromBody] BsonDocument data)
         {
