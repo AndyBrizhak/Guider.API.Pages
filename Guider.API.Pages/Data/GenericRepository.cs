@@ -29,6 +29,13 @@ namespace Guider.API.Pages.Data
 
         public async Task DeleteAsync(string id) =>
             await _collection.DeleteOneAsync(doc => doc.Id == id);
+
+        public async Task<List<GenericDocument>> SearchByFieldAsync(string key, string value)
+        {
+            var filter = Builders<GenericDocument>.Filter.Eq($"data.{key}", value);
+            return await _collection.Find(filter).ToListAsync();
+        }
+
     }
 
 }
